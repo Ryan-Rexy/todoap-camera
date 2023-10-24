@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import { firebase } from "../../firebase/firebase.config";
+import { firebase } from "../../firebase.config";
 import styles from "./style";
 
 const Form = () => {

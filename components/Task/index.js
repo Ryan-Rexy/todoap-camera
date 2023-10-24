@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import styles from "./style";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "@rneui/base";
 
 const Task = ({ item, number, onDeleteTask }) => {
   const navigation = useNavigation();
@@ -20,9 +22,16 @@ const Task = ({ item, number, onDeleteTask }) => {
             {item.completed === true ? "Completed" : "Todo"}
           </Text>
         </View>
-        <Text style={{ color: "red" }} onPress={onDeleteTask}>
-          Delete
-        </Text>
+        <Button
+          containerStyle={{
+            borderRadius: 4,
+            width: 50,
+          }}
+          buttonStyle={{ backgroundColor: "transparent" }}
+          onPress={onDeleteTask}
+        >
+          <Ionicons name="md-remove-circle" size={32} color="red" />
+        </Button>
       </View>
     </TouchableOpacity>
   );

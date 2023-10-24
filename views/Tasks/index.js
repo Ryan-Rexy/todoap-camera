@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Alert } from "react-native";
 import { useEffect, useState } from "react";
-import { firebase } from "../../firebase/firebase.config";
+
+import { firebase } from "../../firebase.config";
 import Task from "../../components/Task";
 import Form from "../../components/InputForm";
 import styles from "../../app.style";
@@ -68,10 +69,3 @@ const Tasks = () => {
 };
 
 export default Tasks;
-
-// [
-//   "react-native-vision-camera",
-//   {
-//     "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
-//   }
-// ]

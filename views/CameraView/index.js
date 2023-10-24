@@ -5,15 +5,16 @@ import * as MediaLibrary from "expo-media-library";
 
 import styles from "./style";
 import { Button } from "@rneui/base";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { firebase } from "../../firebase/firebase.config";
+import { firebase } from "../../firebase.config";
 
 const CameraView = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
   const cameraRef = useRef();
   const route = useRoute();
+  const navigation = useNavigation();
   const { taskId } = route.params;
 
   useEffect(() => {
@@ -38,34 +39,26 @@ const CameraView = () => {
 
   const saveImage = async () => {
     if (image) {
-      console.log("runnnnn", image);
       try {
         const response = await fetch(image);
         const blob = await response.blob();
         const filename = image.substring(image.lastIndexOf("/") + 1);
         await MediaLibrary.createAssetAsync(image);
-        Alert.alert("Picture save");
-
         const storageRef = firebase.storage().ref();
         const upload = storageRef.child(`snapshot/${taskId}/${filename}`);
         await upload.put(blob);
         const url = await upload.getDownloadURL();
 
-        firebase.firestore().collection("todos").doc(taskId).update({
-          image: url,
-        });
-
-        ///////////
-        // const filename = image.substring(image.lastIndexOf("/") + 1);
-        // console.log("filename", filename);
-        // const uploadUri =
-        //   Platform.OS === "ios" ? image.replace("file://", "") : image;
-
-        // // const refImage = ref(storage, `snapshot/${taskId}/${filename}`);
-        // const ref2 = ref(storage, `snapshot/${taskId}/${filename}`);
-        // await ref2.putFile(uploadUri);
-
-        // const url = await ref.getDownloadURL();
+        firebase
+          .firestore()
+          .collection("todos")
+          .doc(taskId)
+          .update({
+            image: url,
+          })
+          .then(() => {
+            navigation.goBack();
+          });
         setImage(null);
       } catch (error) {
         console.log(error);

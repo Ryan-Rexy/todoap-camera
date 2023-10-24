@@ -1,25 +1,26 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Icon, Switch } from "@rneui/themed";
+import { Switch } from "@rneui/themed";
 import { useEffect, useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Button } from "@rneui/base";
+
 import {
-  Alert,
+  Image,
   KeyboardAvoidingView,
   Text,
   TextInput,
   View,
-  Image,
 } from "react-native";
-import { firebase } from "../../firebase/firebase.config";
 
+import { firebase } from "../../firebase.config";
 import styles from "./style";
-import { Button } from "@rneui/base";
 
 const TaskDetail = () => {
   const [task, setTask] = useState({});
   const route = useRoute();
   const navigation = useNavigation();
   const { taskId } = route.params;
-  console.log("PROPS" + taskId);
+
   useEffect(() => {
     const unsubscribe = firebase
       .firestore()
@@ -35,7 +36,6 @@ const TaskDetail = () => {
             };
           });
           const taskDetail = newTasks.find((item) => item.id === taskId);
-          console.log("todo2222", taskDetail);
           setTask(taskDetail);
         },
       });
@@ -57,6 +57,23 @@ const TaskDetail = () => {
   };
   return (
     <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <View style={styles.image}>
+          <Image src={task.image} style={styles.img} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            containerStyle={{
+              borderRadius: 4,
+              width: 50,
+            }}
+            buttonStyle={{ backgroundColor: "transparent" }}
+            onPress={() => navigation.navigate("Camera", { taskId })}
+          >
+            <Ionicons name="md-camera" size={32} color="gray" />
+          </Button>
+        </View>
+      </View>
       <Text style={styles.taskLabel}>Task name</Text>
       <KeyboardAvoidingView
         style={styles.addTask}
@@ -75,19 +92,12 @@ const TaskDetail = () => {
         onValueChange={(value) => setTask({ ...task, completed: value })}
       />
       <View>
-        <View style={styles.image}>
-          <Image src={task.image} style={styles.img} />
-        </View>
         <Button
-          containerStyle={{
-            borderRadius: 4,
-          }}
-          title={"Take photo"}
-          onPress={() => navigation.navigate("Camera", { taskId })}
-        ></Button>
-      </View>
-      <View>
-        <Button style={styles.submit} title="Submit" onPress={handleSubmit} />
+          style={styles.submit}
+          buttonStyle={{ marginTop: 50, borderRadius: 24 }}
+          title="Submit"
+          onPress={handleSubmit}
+        />
       </View>
     </View>
   );

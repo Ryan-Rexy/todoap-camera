@@ -7,18 +7,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flex: 1,
   },
-  quare: {
-    width: 48,
-    height: 36,
-    borderRadius: 10,
-    backgroundColor: "#53d6f2",
+  buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "transparent",
+    marginTop: 5,
   },
-  number: {
-    fontSize: 16,
+  taskLabel: {
     fontWeight: 600,
-    color: "white",
+    fontSize: 40,
+    color: "red",
   },
   content: {
     width: "80%",
@@ -26,7 +24,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 44,
-    width: "80%",
+    width: "100%",
     backgroundColor: "#fff",
     borderWidth: 1,
     borderRadius: 20,
@@ -40,20 +38,27 @@ const styles = StyleSheet.create({
   },
   submit: {
     marginTop: 50,
-    // paddingHorizontal: 20,
-    // width: "100%",
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // alignItems: "center",
+    borderRadius: 20,
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     justifyContent: "center",
     alignItems: "center",
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "gray",
+    textAlign: "center",
+    borderWidth: 8,
+    borderColor: "#fff",
   },
   img: {
     borderRadius: 50,
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
   },
 });
 
